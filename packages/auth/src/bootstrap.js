@@ -4,8 +4,11 @@ import { createMemoryHistory, createBrowserHistory } from 'history';
 
 import App from './App';
 
-const mount = (el, {onNavigate, defaultHistory}) => {
-    const history = defaultHistory || createMemoryHistory();
+const mount = (el, {onNavigate, defaultHistory, initialPath}) => {
+    console.log(initialPath);
+    const history = defaultHistory || createMemoryHistory({
+        initialEntries: [initialPath]
+    });
 
     if (onNavigate) {
         history.listen(onNavigate);
@@ -27,7 +30,7 @@ const mount = (el, {onNavigate, defaultHistory}) => {
 }
 
 if(process.env.NODE_ENV === 'development') {
-    const el = document.querySelector('#_marketing-dev-root');
+    const el = document.querySelector('#auth-dev-root');
 
     if(el) {
         mount(el, { defaultHistory: createBrowserHistory() });
